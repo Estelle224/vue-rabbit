@@ -8,7 +8,7 @@ getNewgoodsList()
 })
 const getNewgoodsList = () => {
   getNewgoods().then(res => {
-    console.log(res, 'goodNew')
+    // console.log(res, 'goodNew')
     newList.value = res.data.result
   })
 }

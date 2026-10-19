@@ -3,7 +3,6 @@ import LayoutNav from './components/layoutNav.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 import LayoutFooter from './components/layoutFooter.vue'
 import LayoutStcky from './components/layoutStcky.vue'
-import Home from '@/views/home/index.vue'
 import { onMounted } from 'vue'
 import {useCateGoryList} from '@/stores/cateGoryList.js'
 const cateGoryLister = useCateGoryList()
@@ -18,7 +17,6 @@ onMounted(() => {
   <LayoutNav />
   <LayoutStcky/>
   <LayoutHeader />
-  <Home/>
   <RouterView />
   <LayoutFooter />
 </template>

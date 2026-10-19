@@ -14,8 +14,8 @@ export const lazyPlugin  = {
        const {stop}  = useIntersectionObserver(
           el,
           ([entry]) => {
-            console.log(entry, '00000000')
-            console.log(entry.isIntersecting, '----')
+            // console.log(entry, '00000000')
+            // console.log(entry.isIntersecting, '----')
             //在试图中
             if (entry.isIntersecting) {
               // 进入视口区域-修改src为图片地址
@@ -25,7 +25,7 @@ export const lazyPlugin  = {
             }
           },
         )
-        console.log(el, binding.value)
+        // console.log(el, binding.value)
       }
     })
  }
