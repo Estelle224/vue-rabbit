@@ -5,3 +5,15 @@ export function getBannerAPI() {
     url:'/home/banner'
   })
 }
+//新鲜好物
+export function getNewgoods() {
+  return httpInstance({
+    url:'/home/new'
+  })
+}
+//人气推荐
+export function getHotgoods() {
+  return httpInstance({
+    url:'/home/hot'
+  })
+}
