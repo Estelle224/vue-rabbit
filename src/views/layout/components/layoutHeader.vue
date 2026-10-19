@@ -1,18 +1,8 @@
 <script setup>
-import { getCateGoryAPI} from '@/apis/layout.js' 
 import { onMounted, ref } from 'vue';
-onMounted(() => {
-  getCateGoryList()
-})
-const cateGoryList = ref([])
-const getCateGoryList = async() => {
-  const res = await getCateGoryAPI()
-  console.log(res, '999999999')
-  if (res.data.code === '1') {
-    console.log('-------')
-    cateGoryList.value = res.data.result
-  }
-}
+import {useCateGoryList} from '@/stores/cateGoryList.js'
+const cateGoryLister = useCateGoryList()
+
 </script>
 
 <template>
@@ -25,7 +15,7 @@ const getCateGoryList = async() => {
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li v-for="item in cateGoryList" :key="item.id">
+        <li v-for="item in cateGoryLister.cateGoryList" :key="item.id">
            <RouterLink  to="/">{{item.name}}</RouterLink>
          </li>
       </ul>
