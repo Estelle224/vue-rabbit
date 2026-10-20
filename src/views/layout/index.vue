@@ -17,6 +17,9 @@ onMounted(() => {
   <LayoutNav />
   <LayoutStcky/>
   <LayoutHeader />
-  <RouterView />
+  <!-- 解决路由缓存问题：方法一:通过加key强制刷新整个路由区域 -->
+   <!-- {{ $route.fullPath }} -->
+  <!-- <RouterView :key="$route.fullPath"/> -->
+   <RouterView></RouterView>
   <LayoutFooter />
 </template>

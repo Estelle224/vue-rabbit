@@ -1,20 +1,9 @@
 <script setup>
-import {getTopCategoryAPI} from "@/apis/category.js"
-import {useRoute} from 'vue-router'
-import { onMounted,ref } from 'vue'
-onMounted(() => {
-  getTopCategory()
-})
-const getNam = ref({})
-//通过useRoute获取地址中的参数id
-const router = useRoute()
-console.log(router, 'router')
-const getTopCategory = () => {
-  getTopCategoryAPI(router.params.id).then(res => {
-    getNam.value = res.data.result
-    // console.log(res, '------')
-  })
-}
+import {useBanner } from './composables/useBanner.js'
+import {useCategory} from './composables/useCategory.js'
+import GoodsItem from '@/views/home/components/goodsItem.vue'
+const { getNam } = useCategory()
+const { bannerList } = useBanner()
 </script>
 
 <template>
@@ -27,10 +16,51 @@ const getTopCategory = () => {
           <el-breadcrumb-item>{{ getNam.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      分类组件
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <!-- 全部分类 -->
+       <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in getNam.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in getNam.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+
+<style scoped lang="scss">
+// 部分代码省略
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+  img {
+    width: 100%;
+    height: 500px;
+  }
+}
+</style>
 
 
 <style scoped lang="scss">

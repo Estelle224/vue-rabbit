@@ -1,8 +1,13 @@
 import httpInstance from '@/utils/https'
-// 轮播数据
-export function getBannerAPI() {
+// 轮播数据-改早传参区分首页和一级分类下的轮播
+export function getBannerAPI(params={}) {
+   // 默认为1 商品为2
+  const {distributionSite = '1'} = params
   return httpInstance({
-    url:'/home/banner'
+    url:'/home/banner',
+    params:{
+      distributionSite
+    }
   })
 }
 //新鲜好物
