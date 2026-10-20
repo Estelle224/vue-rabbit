@@ -1,5 +1,6 @@
 import {ref,onMounted} from 'vue'
 import {getBannerAPI} from '@/apis/home.js'
+
 export function useBanner() {
   // 轮播图逻辑
 const bannerList = ref([])

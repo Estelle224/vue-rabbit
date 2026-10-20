@@ -29,7 +29,8 @@ const { bannerList } = useBanner()
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in getNam.children" :key="i.id">
-            <RouterLink to="/">
+            <!-- //切换二级路由到category/sub/id去 -->
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
