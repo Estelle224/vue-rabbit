@@ -16,7 +16,7 @@ const checkImg = (i) => {
 //  1.阴影的可移动区域（鼠标有效移动区域） 2.计算鼠标的移动的边界值
 const target = ref(null)
 const {elementX, elementY,isOutside} = useMouseInElement(target)
-console.log(elementX, elementY,isOutside)
+// console.log(elementX, elementY,isOutside)
 const x = ref(0)
 const y = ref(0)
 const lagerx = ref(0)
@@ -26,7 +26,7 @@ watch([elementX, elementY,isOutside], () => {
   //  1.阴影的可移动区域（鼠标有效移动区域）-有效范围内控制滑块距离
   // 横向
   if (isOutside.value) return 
-  console.log(elementX, elementY,isOutside)
+  // console.log(elementX, elementY,isOutside)
   if (elementX.value > 100 && elementX.value < 300) { 
       x.value = elementX.value - 100
   }

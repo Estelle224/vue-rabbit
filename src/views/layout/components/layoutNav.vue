@@ -1,15 +1,29 @@
 <script setup>
-
+//有俩个一个是useRoute和useRouter，注意useRoute是用来获取数据的，useRouter是用来进行路由跳转的
+import { useRouter } from 'vue-router'
+import {useUserInfo} from '@/stores/userInfo'
+const router = useRouter()
+const goLogin = () => {
+  console.log('跳转登录页')
+  router.push({path: '/login'})
+}
+const userInfoStore = useUserInfo()
+const loginOut = () => {
+  // 1.清空用户数据
+    userInfoStore.clearUserInfo()
+  // 2.跳转到登录页面
+   router.push({path: '/login'})
+}
 </script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="true">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="userInfoStore?.userInfo?.token">
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{userInfoStore.userInfo.account}}</a></li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="loginOut" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
@@ -19,7 +33,7 @@
           <li><a href="javascript:;">会员中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li><a href="javascript:;" @click="goLogin">请先登录</a></li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

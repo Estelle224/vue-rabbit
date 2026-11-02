@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import {useCateGoryList} from '@/stores/cateGoryList.js'
+import heardCart from './heardCart.vue'
 const cateGoryLister = useCateGoryList()
 
 </script>
@@ -24,7 +25,7 @@ const cateGoryLister = useCateGoryList()
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
-      
+      <heardCart/>
     </div>
   </header>
 </template>
