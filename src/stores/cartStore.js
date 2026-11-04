@@ -129,7 +129,8 @@ export const useCartStore =  defineStore('cartStore', () => {
     getSelCount,
     getSelPrice,
     clearCart,
-    mergeCartlist
+    mergeCartlist,
+    refreshCartList
   }
 },{
   persist: true,

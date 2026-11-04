@@ -9,6 +9,7 @@ import SubCategory from '@/views/subCategory/index.vue'
 import Detail from '@/views/detail/index.vue'
 import CartList from '@/views/cartList/index.vue'
 import CheckoutPage from '@/views/checkoutPage/index.vue'
+import Pay from '@/views/pay/index.vue'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   //配置路由的地方-path和component对应的位置
@@ -34,6 +35,9 @@ const router = createRouter({
     }, {
       path:'checkout',
       component:CheckoutPage
+    },{
+      path:'pay',
+      component: Pay
     }]
   }, {
     path: '/login',

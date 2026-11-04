@@ -1,12 +1,78 @@
 <script setup>
-import {ref} from 'vue'
-const checkInfo = {}  // 订单对象
-const curAddress = {}  // 地址对象
-
+import {onMounted, ref} from 'vue'
+import {getOrderPreAPI,submitOrder} from '@/apis/checkInfo.js'
+import {useCartStore} from '@/stores/cartStore.js'
+import {useRouter} from 'vue-router'
+const checkInfo = ref({})  // 订单对象
+const curAddress = ref({}) // 地址对象
+const $router = useRouter()
+const cartStore = useCartStore()
+onMounted(() => {
+  getCheckoutDetaile()
+})
+//获取结算界面的详情
+const getCheckoutDetaile = async() => {
+  let res = await getOrderPreAPI()
+  console.log(res, '9999999')
+  let detaileMsg = res.data.result
+  checkInfo.value = detaileMsg
+  console.log(checkInfo.value.userAddresses, 'checkInfo.value.userAddresses')
+  curAddress.value = checkInfo.value.userAddresses.find(item =>  item.isDefault === 0)
+}
+//切换地址打开弹窗
+const toggleFlag = ref(false)
 const changeAddress = () => {
     toggleFlag.value = true
 }
-const toggleFlag = ref(false)
+
+const addressOk = () => {
+   curAddress.value = checkInfo.value.userAddresses.find(item =>  item.isDefault === 0)
+   toggleFlag.value = false
+}
+// 切换地址
+
+const checkoutAdress = (item) => {
+  checkInfo.value.userAddresses.forEach(el => {
+    console.log(el, '999999')
+    if(el.id === item.id) {
+      el.isDefault = 0
+    } else {
+       el.isDefault = 1
+    }
+  })
+ 
+}
+//提交订单
+const submitCard = async() => {
+  let data = {
+    //配送时间
+    "deliveryTimeType": 1,
+    // 支付方式
+    "payType": 1,
+    //支付渠道
+    "payChannel": 1,
+    // 买家备注留言
+    "buyerMessage": "",
+    //商品
+    "goods": checkInfo.value.goods.map(el => ({
+      skuId: el.skuId,
+      count: el.count
+    })),
+    "addressId": (checkInfo.value.userAddresses.find(el => el.isDefault === 0)||{}).id
+  }
+  let res = await submitOrder(data)
+  console.log(res, '9999999')
+  let orderId = res.data.result.id
+  ///pay?id=2117906047631888386这样-传参为query
+  $router.push({
+    path:'/pay',
+    query:{
+      id:orderId
+    }
+  })
+  //更新购物车
+  cartStore.refreshCartList()
+}
 </script>
 
 <template>
@@ -101,7 +167,7 @@ const toggleFlag = ref(false)
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" >提交订单</el-button>
+          <el-button type="primary" size="large" @click="submitCard">提交订单</el-button>
         </div>
       </div>
     </div>
@@ -109,8 +175,8 @@ const toggleFlag = ref(false)
   <!-- 切换地址 -->
    <el-dialog title="切换收货地址" width="30%" center v-model="toggleFlag">
     <div class="addressWrapper">
-      <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
-        <ul>
+      <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id" :class="{'active': item.isDefault === 0}">
+        <ul @click="checkoutAdress(item)" >
         <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
         <li><span>联系方式：</span>{{ item.contact }}</li>
         <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
@@ -120,7 +186,7 @@ const toggleFlag = ref(false)
     <template #footer>
       <span class="dialog-footer">
         <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="addressOk">确定</el-button>
       </span>
     </template>
   </el-dialog>
