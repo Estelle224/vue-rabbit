@@ -9,6 +9,7 @@ const router = useRouter()
 const httpInstance = axios.create({
   //设置一个公共路径
   baseURL: '/api',
+  //  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
   //设置超时时间
   timeout: 5000
 })
@@ -17,10 +18,11 @@ httpInstance.interceptors.request.use(config => {
   // 请求头添加token
   const userinfoStore = useUserInfo()
   const token = userinfoStore?.userInfo?.token
-  console.log('请求头是偶', token)
   if(token) {
+    console.log('请求头是偶---', token)
     //  config.headers.Authorization = `Bearer ${token}`
-      config.headers.set('Authorization', `Bearer ${token}`); 
+    config.headers.Authorization = `Bearer ${token}`;
+    // config.headers.set('Authorization', `Bearer ${token}`); 
   }
   return config
 }, e => Promise.reject(e))

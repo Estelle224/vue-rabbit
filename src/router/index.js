@@ -7,7 +7,8 @@ import Home from '@/views/home/index.vue'
 import Category from '@/views/category/index.vue'
 import SubCategory from '@/views/subCategory/index.vue'
 import Detail from '@/views/detail/index.vue'
-
+import CartList from '@/views/cartList/index.vue'
+import CheckoutPage from '@/views/checkoutPage/index.vue'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   //配置路由的地方-path和component对应的位置
@@ -27,7 +28,12 @@ const router = createRouter({
     }, {
       path:'detail/:id',
       component: Detail
-
+    }, {
+      path:'cartList',
+      component: CartList
+    }, {
+      path:'checkout',
+      component:CheckoutPage
     }]
   }, {
     path: '/login',

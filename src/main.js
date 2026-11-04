@@ -12,11 +12,11 @@ import {componentPlugin} from '@/components/index.js'
 const app = createApp(App)
 
 const pinia = createPinia()
+app.use(pinia)
 //每个人和每个项目提供对 Pinia store 的持久化
 pinia.use(piniaPluginPersistedstate)
 //引入自定义指令
 app.use(lazyPlugin)
 app.use(componentPlugin)
 app.use(router)
-app.use(pinia)
 app.mount('#app')

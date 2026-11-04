@@ -30,6 +30,7 @@ export default defineConfig({
       '/api': {
         target: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
         changeOrigin: true, // 关键：让后端以为请求来自它自己
+        followRedirects: true, // 关键配置：让代理跟随重定向-使用代理之后，会有一个301接口请求，并且正常请求中不会协带token
         rewrite: (path) => path.replace(/^\/api/, ''), // 去掉 /api 前缀（如果需要）
       },
     },

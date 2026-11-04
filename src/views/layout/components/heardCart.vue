@@ -1,6 +1,12 @@
 <script setup>
 import {useCartStore} from '@/stores/cartStore.js'
+import { useRouter } from 'vue-router';
 const getCartStore = useCartStore()
+const $router = useRouter()
+const goSettle = () => {
+  console.log($router, 'getRoute')
+  $router.push('/cartList')
+}
 </script>
 
 <template>
@@ -34,7 +40,7 @@ const getCartStore = useCartStore()
           <p>共 {{getCartStore.getCount}} 件商品</p>
           <p>&yen; {{getCartStore.getSumPrice.toFixed(2)}}</p>
         </div>
-        <el-button size="large" type="primary" >去购物车结算</el-button>
+        <el-button size="large" type="primary" @click="goSettle">去购物车结算</el-button>
       </div>
     </div>
 </div>

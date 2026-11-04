@@ -2,9 +2,11 @@
 //有俩个一个是useRoute和useRouter，注意useRoute是用来获取数据的，useRouter是用来进行路由跳转的
 import { useRouter } from 'vue-router'
 import {useUserInfo} from '@/stores/userInfo'
+import {useCartStore} from '@/stores/cartStore.js'
+const getCartStore = useCartStore()
 const router = useRouter()
 const goLogin = () => {
-  console.log('跳转登录页')
+  // console.log('跳转登录页')
   router.push({path: '/login'})
 }
 const userInfoStore = useUserInfo()
@@ -13,6 +15,8 @@ const loginOut = () => {
     userInfoStore.clearUserInfo()
   // 2.跳转到登录页面
    router.push({path: '/login'})
+   //清空购物车
+   getCartStore.clearCart()
 }
 </script>
 
